@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #B1F0F7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #FFF8E6;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #FCFFC1;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Complaint Form</h1>
+        <form>
+            
+            <div class="section">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required>
+
+                <label for="contact-info">Contact Information</label>
+                <input type="text" id="contact-info" name="contact-info" placeholder="Phone number, email address, or address" required>
+
+                <label for="reference-number">Reference/ID Number (if applicable)</label>
+                <input type="text" id="reference-number" name="reference-number" placeholder="Enter reference or ID number">
+            </div>
+
+            
+            <div class="section">
+                <label for="incident-details">Details of the Incident</label>
+                <textarea id="incident-details" name="incident-details" rows="5" placeholder="Describe the situation causing harm" required></textarea>
+
+                <label for="responsible-party">Who is Responsible</label>
+                <input type="text" id="responsible-party" name="responsible-party" placeholder="Name, role, or relationship to the victim">
+
+                <label for="affected-party">Who is Affected</label>
+                <input type="text" id="affected-party" name="affected-party" placeholder="Yourself, another individual, or a group">
+            </div>
+
+        
+            <div class="section">
+                <label for="incident-date">Date and Time</label>
+                <input type="datetime-local" id="incident-date" name="incident-date" required>
+
+                <label for="event-frequency">Is this a recurring issue?</label>
+                <select id="event-frequency" name="event-frequency">
+                    <option value="one-time">One-Time Event</option>
+                    <option value="recurring">Recurring Issue</option>
+                </select>
+            </div>
+
+            
+            <div class="section">
+                <label for="incident-location">Location</label>
+                <input type="text" id="incident-location" name="incident-location" placeholder="Address, organization, or online platform">
+            </div>
+
+            
+            <div class="section">
+                <label for="impact-description">Impact of the Issue</label>
+                <textarea id="impact-description" name="impact-description" rows="5" placeholder="Describe the harm caused (physical, emotional, financial, or social)" required></textarea>
+
+                <label for="evidence">Evidence</label>
+                <input type="file" id="evidence" name="evidence" multiple>
+            </div>
+
+        
+            <div class="section">
+                <label for="resolution">Resolution Sought</label>
+                <textarea id="resolution" name="resolution" rows="3" placeholder="Explain what you expect as an outcome (apology, compensation, corrective action)" required></textarea>
+            </div>
+
+            
+            <div class="section">
+                <label for="steps-taken">Steps Already Taken</label>
+                <textarea id="steps-taken" name="steps-taken" rows="3" placeholder="Mention steps you have already taken to resolve the issue"></textarea>
+
+                <label for="declaration">Declaration</label>
+                <input type="checkbox" id="declaration" name="declaration" required>
+                <span>I affirm that the information provided is accurate to the best of my knowledge.</span>
+            </div>
+
+            <button type="submit">Submit Complaint</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+
+.lawyer-profile {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.lawyer-image {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.lawyer-details {
+    max-width: 500px;
+}
+
+.lawyer-details h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.lawyer-details p {
+    margin: 10px 0;
+    color: #555;
+}
+
+.lawyer-details a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.lawyer-details a:hover {
+    text-decoration: underline;
+}
+
+.hire-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a5b2b9;
+    color: light pink;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.hire-button:hover {
+    background-color: #63e87f;
+}

@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #FFF6E9;
+}
+
+header {
+    background: #226c9a;
+    color: #ffffff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+
+
+
+main {
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #35424a;
+}
+
+ol {
+    margin-left: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #35424a;
+    color: #ffffff;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Hide the sub-menu by default */
+.nav-list .sub-menu {
+    display: none;
+    position: absolute; /* Position it below the parent menu */
+    list-style-type: none;
+    padding: 10px;
+    background-color: white; /* Set background color */
+    border: 1px solid #ccc; /* Add border to dropdown */
+}
+
+
+.nav-list {
+    position: relative; /* Make parent menu relative to allow absolute positioning of submenu */
+}
+
+
+
+
+/* Show the sub-menu when hovering over the parent li */
+.nav-list li:hover .sub-menu {
+    display: block;
+}
+
+/* Style for dropdown items */
+.nav-list .sub-menu li {
+    margin: 0;
+    padding: 5px 0;
+}
+
+/* Optional: Style the links inside the dropdown */
+.nav-list .sub-menu li a {
+    text-decoration: none;
+    color: black;
+}
+
+.nav-list .sub-menu li a:hover {
+    color: blue; /* Change color on hover */
+}

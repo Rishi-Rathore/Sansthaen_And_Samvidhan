@@ -1,0 +1,32 @@
+body {
+  font-size: 16px;
+  font-family: "Helvetica", "Arial", sans-serif;
+  text-align: right;
+  background-color: #f8faff;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.bubbly-button {
+  font-family: "Helvetica", "Arial", sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 10px 20px;
+  margin-top: 20px;  
+  margin-right: 20px;  
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #ff0081;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  position: absolute;  
+  top: 20px; 
+  right: 20px; 
+  transition: transform 0.15s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  box-shadow: 0 4px 30px rgba(255, 0, 130, 0.4
