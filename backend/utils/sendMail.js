@@ -6,10 +6,7 @@ const sendMail = async (to, otp) => {
   try {
     const msg = {
       to: to,
-     from: process.env.SENDGRID_FROM_EMAIL
-,
-
-
+      from: process.env.SENDGRID_FROM_EMAIL,
       subject: "OTP Verification",
       html: `
         <h2>Your OTP is: ${otp}</h2>
@@ -18,9 +15,11 @@ const sendMail = async (to, otp) => {
     };
 
     await sgMail.send(msg);
-    console.log("OTP mail sent successfully");
+    console.log("OTP mail sent successfully to:", to);
+    return true;
   } catch (error) {
     console.error("SendGrid mail error:", error.response?.body || error);
+    throw error; // Re-throw to handle in controller
   }
 };
 

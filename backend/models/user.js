@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
 
     // 🔐 FORGOT PASSWORD OTP (NEW)
     resetOtp: String,
-    resetOtpExpire: Date
+    resetOtpExpiry: Date
   },
   { timestamps: true }
 );

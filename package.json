@@ -1,0 +1,15 @@
+{
+  "name": "project.html",
+  "version": "1.0.0",
+  "description": "This project is a web-based platform designed to promote awareness about constitutional rights and streamline access to legal support. It includes modules for user authentication, application form submission, legal knowledge sharing, and hiring verified advocates.\r meow",
+  "main": "frontend-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

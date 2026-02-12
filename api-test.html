@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test Page</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px 20px; margin: 10px; background: #4facfe; color: white; border: none; cursor: pointer; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ddd; background: #f9f9f9; }
+        input { padding: 8px; margin: 5px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h2>API Test Page</h2>
+    
+    <h3>1. Test Server Health</h3>
+    <button onclick="testServer()">Test Server</button>
+    
+    <h3>2. Test Forgot Password Routes</h3>
+    <button onclick="testRoutes()">Test Routes</button>
+    
+    <h3>3. Test Send OTP</h3>
+    <input type="email" id="testEmail" placeholder="Enter email to test" value="rishirathour999@gmail.com">
+    <button onclick="testSendOTP()">Send OTP</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        async function testServer() {
+            try {
+                const response = await fetch('http://localhost:5000');
+                const data = await response.json();
+                showResult('Server Health', response.status, data);
+            } catch (error) {
+                showResult('Server Health', 'ERROR', { error: error.message });
+            }
+        }
+        
+        async function testRoutes() {
+            try {
+                const response = await fetch('http://localhost:5000/api/forgot-password/test');
+                const data = await response.json();
+                showResult('Routes Test', response.status, data);
+            } catch (error) {
+                showResult('Routes Test', 'ERROR', { error: error.message });
+            }
+        }
+        
+        async function testSendOTP() {
+            const email = document.getElementById('testEmail').value;
+            if (!email) {
+                alert('Please enter an email');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/forgot-password/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+                const data = await response.json();
+                showResult('Send OTP', response.status, data);
+            } catch (error) {
+                showResult('Send OTP', 'ERROR', { error: error.message });
+            }
+        }
+        
+        function showResult(test, status, data) {
+            const div = document.createElement('div');
+            div.className = 'result';
+            div.innerHTML = `
+                <h4>${test}</h4>
+                <p><strong>Status:</strong> ${status}</p>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+            results.appendChild(div);
+        }
+    </script>
+</body>
+</html>

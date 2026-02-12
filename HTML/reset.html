@@ -2,34 +2,109 @@
 <html>
 <head>
   <title>Reset Password</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #fff;
+      padding: 30px;
+      width: 360px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      background: #4facfe;
+      color: #fff;
+    }
+    #msg {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
 <div class="card">
   <h2>Reset Password</h2>
 
-  <input type="email" id="email" placeholder="Email">
-  <input type="text" id="otp" placeholder="Enter OTP">
   <input type="password" id="password" placeholder="New password">
+  <input type="password" id="confirmPassword" placeholder="Confirm new password">
 
   <button onclick="reset()">Reset Password</button>
   <p id="msg"></p>
 </div>
 
 <script>
-function reset() {
-  fetch("/reset-password", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: email.value,
-      otp: otp.value,
-      password: password.value
-    })
-  })
-  .then(res => res.json())
-  .then(data => msg.innerText = data.message);
+async function reset() {
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirmPassword").value.trim();
+  const email = localStorage.getItem("resetEmail");
+  const msg = document.getElementById("msg");
+
+  if (!password || !confirmPassword) {
+    msg.textContent = "Please fill all fields";
+    msg.style.color = "red";
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    msg.textContent = "Passwords do not match";
+    msg.style.color = "red";
+    return;
+  }
+
+  if (password.length < 6) {
+    msg.textContent = "Password must be at least 6 characters";
+    msg.style.color = "red";
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/forgot-password/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        newPassword: password
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      msg.textContent = data.msg || "Reset failed";
+      msg.style.color = "red";
+      return;
+    }
+
+    msg.textContent = "Password reset successful! Redirecting to login...";
+    msg.style.color = "green";
+    
+    // Clear stored email and redirect to login
+    localStorage.removeItem("resetEmail");
+    setTimeout(() => {
+      window.location.href = "log in.html";
+    }, 2000);
+
+  } catch (error) {
+    msg.textContent = "Server error";
+    msg.style.color = "red";
+  }
 }
 </script>
 

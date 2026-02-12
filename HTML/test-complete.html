@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete System Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f7fa; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; background: #4facfe; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        .test-section { margin: 20px 0; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Complete System Test</h1>
+        
+        <div class="test-section">
+            <h3>1. Server Status Check</h3>
+            <button onclick="checkServers()">Check Both Servers</button>
+            <div id="serverStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. API Endpoints Test</h3>
+            <button onclick="testAPI()">Test Forgot Password API</button>
+            <div id="apiStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Quick Links</h3>
+            <button onclick="window.open('/forgot', '_blank')">Open Forgot Password Page</button>
+            <button onclick="window.open('/login', '_blank')">Open Login Page</button>
+            <button onclick="window.open('/register', '_blank')">Open Register Page</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. System Information</h3>
+            <div class="info">
+                <strong>Frontend Server:</strong> http://localhost:3000<br>
+                <strong>Backend API:</strong> http://localhost:5000<br>
+                <strong>Database:</strong> MongoDB Atlas (Connected)<br>
+                <strong>Email Service:</strong> SendGrid
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function checkServers() {
+            const statusDiv = document.getElementById('serverStatus');
+            statusDiv.innerHTML = 'Checking servers...';
+            
+            let results = [];
+            
+            // Check Frontend
+            try {
+                const frontendResponse = await fetch('http://localhost:3000/forgot');
+                results.push(`<div class="success">✅ Frontend Server: Running (Status: ${frontendResponse.status})</div>`);
+            } catch (error) {
+                results.push(`<div class="error">❌ Frontend Server: Error - ${error.message}</div>`);
+            }
+            
+            // Check Backend
+            try {
+                const backendResponse = await fetch('http://localhost:5000');
+                results.push(`<div class="success">✅ Backend Server: Running (Status: ${backendResponse.status})</div>`);
+            } catch (error) {
+                results.push(`<div class="error">❌ Backend Server: Error - ${error.message}</div>`);
+            }
+            
+            statusDiv.innerHTML = results.join('');
+        }
+        
+        async function testAPI() {
+            const statusDiv = document.getElementById('apiStatus');
+            statusDiv.innerHTML = 'Testing API endpoints...';
+            
+            let results = [];
+            
+            // Test Routes
+            try {
+                const routesResponse = await fetch('http://localhost:5000/api/forgot-password/test');
+                const routesData = await routesResponse.json();
+                results.push(`<div class="success">✅ API Routes: Working</div>`);
+            } catch (error) {
+                results.push(`<div class="error">❌ API Routes: Error - ${error.message}</div>`);
+            }
+            
+            // Test Send OTP (with test email)
+            try {
+                const otpResponse = await fetch('http://localhost:5000/api/forgot-password/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'test@example.com' })
+                });
+                const otpData = await otpResponse.json();
+                
+                if (otpResponse.status === 404) {
+                    results.push(`<div class="info">ℹ️ Send OTP: API Working (User not found - expected for test email)</div>`);
+                } else if (otpResponse.ok) {
+                    results.push(`<div class="success">✅ Send OTP: Working (OTP sent successfully)</div>`);
+                } else {
+                    results.push(`<div class="error">❌ Send OTP: ${otpData.msg}</div>`);
+                }
+            } catch (error) {
+                results.push(`<div class="error">❌ Send OTP: Error - ${error.message}</div>`);
+            }
+            
+            statusDiv.innerHTML = results.join('');
+        }
+        
+        // Auto-check servers on page load
+        window.onload = function() {
+            checkServers();
+        };
+    </script>
+</body>
+</html>

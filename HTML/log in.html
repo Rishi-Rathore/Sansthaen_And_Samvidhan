@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced Login Page</title>
     <script src="js/auth.js"></script>
-    <script src="register.js"></script>
+  
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -247,7 +247,7 @@
         </div>
     </div>
 
-   <script>
+  <script>
   // DOM Elements
   const form = document.getElementById("loginForm");
   const usernameInput = document.getElementById("username");
@@ -322,20 +322,15 @@
   });
 
   forgotPasswordLink.addEventListener("click", (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    const username = usernameInput.value.trim();
+    if (username) {
+      window.location.href = `forgot.html?email=${encodeURIComponent(username)}`;
+    } else {
+      window.location.href = "forgot.html";
+    }
+  });
 
-  // username/email auto-pass (optional but good UX)
-  const username = usernameInput.value.trim();
-
-  if (username) {
-    window.location.href = `forgot.html?email=${encodeURIComponent(username)}`;
-  } else {
-    window.location.href = "forgot.html";
-  }
-});
-
-
-  
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -352,7 +347,7 @@
     setLoadingState(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("http://127.0.0.1:5000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -373,11 +368,9 @@
         } else {
           showError(data.msg || "Invalid username or password");
         }
-        setLoadingState(false);
         return;
       }
 
-      
       failedAttempts = 0;
       localStorage.setItem("token", data.token);
 
@@ -392,13 +385,15 @@
         window.location.href = "dashboard.html";
       }, 1000);
 
-    } catch (err) {
+    } catch (error) {
+      console.error("Login error:", error);
       showError("Server not running");
+    } finally {
+      setLoadingState(false);
     }
-
-    setLoadingState(false);
   });
 </script>
+
 
 </body>
 </html>

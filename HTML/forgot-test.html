@@ -1,14 +1,11 @@
-<script>
-  alert("THIS FILE IS RUNNING");
-</script>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Forgot Password</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Forgot Password - Fixed</title>
   <style>
     body {
       font-family: Arial;
@@ -17,6 +14,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
     .box {
       background: #fff;
@@ -29,19 +27,36 @@
       width: 100%;
       padding: 10px;
       margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
     }
     button {
       border: none;
       cursor: pointer;
       background: #4facfe;
       color: #fff;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #3a8fd9;
     }
     .msg {
       font-size: 14px;
       margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
     }
     #otpSection {
       display: none;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
     }
   </style>
 </head>
@@ -51,10 +66,10 @@
   <h2>Forgot Password</h2>
 
   <!-- EMAIL -->
-  <input type="email" id="email" placeholder="Enter your email">
+  <input type="email" id="email" placeholder="Enter your email" value="rishirathour758@gmail.com">
   <button id="sendOtpBtn">Send OTP</button>
 
-  <!-- OTP VERIFY (SAME PAGE) -->
+  <!-- OTP VERIFY -->
   <div id="otpSection">
     <input type="text" id="otp" placeholder="Enter OTP">
     <button id="verifyOtpBtn">Verify OTP</button>
@@ -72,11 +87,17 @@
 
     if (!email) {
       msg.textContent = "Email is required";
-      msg.style.color = "red";
+      msg.className = "msg error";
       return;
     }
 
+    msg.textContent = "Sending OTP...";
+    msg.className = "msg";
+
     try {
+      console.log("Sending request to:", "http://localhost:5000/api/forgot-password/send-otp");
+      console.log("Email:", email);
+
       const res = await fetch("http://localhost:5000/api/forgot-password/send-otp", {
         method: "POST",
         headers: {
@@ -85,23 +106,25 @@
         body: JSON.stringify({ email })
       });
 
-
+      console.log("Response status:", res.status);
       const data = await res.json();
+      console.log("Response data:", data);
 
       if (!res.ok) {
-        msg.textContent = data.msg || "User not found";
-        msg.style.color = "red";
+        msg.textContent = data.msg || "Error sending OTP";
+        msg.className = "msg error";
         return;
       }
 
       localStorage.setItem("resetEmail", email);
-      msg.textContent = "OTP sent successfully";
-      msg.style.color = "green";
+      msg.textContent = "OTP sent successfully! Check your email.";
+      msg.className = "msg success";
       document.getElementById("otpSection").style.display = "block";
 
-    } catch {
-      msg.textContent = "Server error";
-      msg.style.color = "red";
+    } catch (error) {
+      console.error("Error:", error);
+      msg.textContent = "Server error: " + error.message;
+      msg.className = "msg error";
     }
   });
 
@@ -111,7 +134,8 @@
     const otp = document.getElementById("otp").value.trim();
 
     if (!otp) {
-      alert("OTP required");
+      msg.textContent = "OTP required";
+      msg.className = "msg error";
       return;
     }
 
@@ -125,15 +149,21 @@
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.msg || "Invalid OTP");
+        msg.textContent = data.msg || "Invalid OTP";
+        msg.className = "msg error";
         return;
       }
 
-      // VERIFIED → NEXT PAGE
-      window.location.href = "reset.html";
+      msg.textContent = "OTP verified! Redirecting...";
+      msg.className = "msg success";
+      
+      setTimeout(() => {
+        window.location.href = "reset.html";
+      }, 1500);
 
-    } catch {
-      alert("Server error");
+    } catch (error) {
+      msg.textContent = "Server error: " + error.message;
+      msg.className = "msg error";
     }
   });
 </script>
