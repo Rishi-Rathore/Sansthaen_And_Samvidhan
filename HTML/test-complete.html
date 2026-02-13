@@ -39,8 +39,8 @@
         <div class="test-section">
             <h3>4. System Information</h3>
             <div class="info">
-                <strong>Frontend Server:</strong> http://localhost:3000<br>
-                <strong>Backend API:</strong> http://localhost:5000<br>
+                <strong>Frontend Server:</strong> Netlify<br>
+                <strong>Backend API:</strong> https://sansthaen-and-samvidhan1.onrender.com<br>
                 <strong>Database:</strong> MongoDB Atlas (Connected)<br>
                 <strong>Email Service:</strong> SendGrid
             </div>
@@ -64,7 +64,7 @@
             
             // Check Backend
             try {
-                const backendResponse = await fetch('http://localhost:5000');
+                const backendResponse = await fetch('https://sansthaen-and-samvidhan1.onrender.com');
                 results.push(`<div class="success">✅ Backend Server: Running (Status: ${backendResponse.status})</div>`);
             } catch (error) {
                 results.push(`<div class="error">❌ Backend Server: Error - ${error.message}</div>`);
@@ -81,7 +81,7 @@
             
             // Test Routes
             try {
-                const routesResponse = await fetch('http://localhost:5000/api/forgot-password/test');
+                const routesResponse = await fetch('https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/test');
                 const routesData = await routesResponse.json();
                 results.push(`<div class="success">✅ API Routes: Working</div>`);
             } catch (error) {
@@ -90,7 +90,7 @@
             
             // Test Send OTP (with test email)
             try {
-                const otpResponse = await fetch('http://localhost:5000/api/forgot-password/send-otp', {
+                const otpResponse = await fetch('https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/send-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: 'test@example.com' })

@@ -29,7 +29,7 @@
         
         async function testServer() {
             try {
-                const response = await fetch('http://localhost:5000');
+                const response = await fetch('https://sansthaen-and-samvidhan1.onrender.com');
                 const data = await response.json();
                 showResult('Server Health', response.status, data);
             } catch (error) {
@@ -39,7 +39,7 @@
         
         async function testRoutes() {
             try {
-                const response = await fetch('http://localhost:5000/api/forgot-password/test');
+                const response = await fetch('https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/test');
                 const data = await response.json();
                 showResult('Routes Test', response.status, data);
             } catch (error) {
@@ -55,7 +55,7 @@
             }
             
             try {
-                const response = await fetch('http://localhost:5000/api/forgot-password/send-otp', {
+                const response = await fetch('https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/send-otp', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

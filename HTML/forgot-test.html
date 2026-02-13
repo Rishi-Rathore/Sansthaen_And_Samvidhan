@@ -95,10 +95,10 @@
     msg.className = "msg";
 
     try {
-      console.log("Sending request to:", "http://localhost:5000/api/forgot-password/send-otp");
+      console.log("Sending request to:", "https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/send-otp");
       console.log("Email:", email);
 
-      const res = await fetch("http://localhost:5000/api/forgot-password/send-otp", {
+      const res = await fetch("https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -140,7 +140,7 @@
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/forgot-password/verify-otp", {
+      const res = await fetch("https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })

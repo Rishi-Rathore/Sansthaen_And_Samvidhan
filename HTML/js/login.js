@@ -8,7 +8,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   errorMessage.textContent = "";
 
   try {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch("https://sansthaen-and-samvidhan1.onrender.com/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })

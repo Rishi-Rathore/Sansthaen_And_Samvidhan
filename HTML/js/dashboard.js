@@ -8,7 +8,7 @@ if (!token) {
   window.location.href = "login.html";
 }
 
-fetch("http://localhost:5000/api/auth/profile", {
+fetch("https://sansthaen-and-samvidhan1.onrender.com/api/auth/profile", {
   headers: {
     Authorization: "Bearer " + token
   }
