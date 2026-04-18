@@ -1,4 +1,21 @@
-node_modules/
-.env
-backend/node_modules/
-backend/.env
+// pattern print
+
+public class PrintPattern{
+public static void main(String args[]){
+
+int rows=5
+for(int i=1; i<=rows ;i++){
+for(int j<=rows;j++){
+   
+if(j==1|| j==i|| i+j= rows+1||j==rows){
+System.out.print("* ");
+
+}else{
+System.out.print(" ");
+}}
+System.out.println();
+
+
+ }
+}
+}

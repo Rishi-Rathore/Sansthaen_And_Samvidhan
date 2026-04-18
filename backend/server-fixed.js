@@ -53,16 +53,37 @@ app.use((req, res) => {
 // Start server
 const PORT = process.env.PORT || 5000;
 
+// Self-ping to prevent Render free tier sleep
+const keepAlive = () => {
+  const url = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
+  if (process.env.NODE_ENV === 'production') {
+    setInterval(() => {
+      const https = require('https');
+      const http = require('http');
+      const client = url.startsWith('https') ? https : http;
+      client.get(url, (res) => {
+        console.log(`🔄 Keep-alive ping: ${res.statusCode}`);
+      }).on('error', (err) => {
+        console.log('⚠️ Keep-alive ping failed:', err.message);
+      });
+    }, 10 * 60 * 1000); // Every 10 minutes
+    console.log('🔄 Keep-alive service started');
+  }
+};
+
 mongoose
   .connect(process.env.MONGO_URI, {
     serverSelectionTimeoutMS: 10000,
     socketTimeoutMS: 45000,
+    maxPoolSize: 10,
+    retryWrites: true,
   })
   .then(() => {
     console.log("✅ MongoDB connected successfully");
     app.listen(PORT, () => {
       console.log(`✅ Server running on http://localhost:${PORT}`);
       console.log(`📧 Forgot Password: POST http://localhost:${PORT}/api/forgot-password/send-otp`);
+      keepAlive(); // Start keep-alive
     });
   })
   .catch(err => {

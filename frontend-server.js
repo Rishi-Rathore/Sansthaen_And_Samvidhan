@@ -1,6 +1,17 @@
 const express = require('express');
 const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
+
+// Proxy all /api requests to backend
+app.use('/api', createProxyMiddleware({
+    target: 'http://localhost:5000',
+    changeOrigin: true,
+    onError: (err, req, res) => {
+        console.log('❌ Proxy error:', err.message);
+        res.status(500).json({ msg: 'Backend not running' });
+    }
+}));
 
 // Add request logging
 app.use((req, res, next) => {
