@@ -1,21 +1,20 @@
-// pattern print
+# Environment variables - NEVER commit these
+.env
+backend/.env
+*.env
 
-public class PrintPattern{
-public static void main(String args[]){
+# Node modules
+node_modules/
+backend/node_modules/
 
-int rows=5
-for(int i=1; i<=rows ;i++){
-for(int j<=rows;j++){
-   
-if(j==1|| j==i|| i+j= rows+1||j==rows){
-System.out.print("* ");
+# Logs
+*.log
+npm-debug.log*
 
-}else{
-System.out.print(" ");
-}}
-System.out.println();
+# OS files
+.DS_Store
+Thumbs.db
 
-
- }
-}
-}
+# Build files
+dist/
+build/
