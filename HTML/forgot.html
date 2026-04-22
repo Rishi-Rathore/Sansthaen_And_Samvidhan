@@ -8,6 +8,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script src="js/config.js"></script>
   <title>Forgot Password</title>
   <style>
     body {
@@ -77,7 +78,7 @@
     }
 
     try {
-      const res = await fetch("https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/send-otp", {
+      const res = await fetch(`${API_BASE_URL}/api/forgot-password/send-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -116,7 +117,7 @@
     }
 
     try {
-      const res = await fetch("https://sansthaen-and-samvidhan1.onrender.com/api/forgot-password/verify-otp", {
+      const res = await fetch(`${API_BASE_URL}/api/forgot-password/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })
