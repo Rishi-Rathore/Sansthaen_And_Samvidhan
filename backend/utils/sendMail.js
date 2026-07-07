@@ -2,17 +2,17 @@ const nodemailer = require("nodemailer");
 
 const sendMail = async (to, otp) => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
     auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,
+      user: "b126f8001@smtp-brevo.com",
+      pass: process.env.BREVO_PASS,
     },
   });
 
   await transporter.sendMail({
-    from: `"Sansthaen And Samvidhan" <${process.env.GMAIL_USER}>`,
+    from: '"Sansthaen And Samvidhan" <rishirathour999@gmail.com>',
     to: to,
     subject: "OTP Verification",
     html: `<h2>Your OTP is: <strong>${otp}</strong></h2><p>Valid for 5 minutes.</p>`
