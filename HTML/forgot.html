@@ -70,12 +70,19 @@
   // SEND OTP
   document.getElementById("sendOtpBtn").addEventListener("click", async () => {
     const email = document.getElementById("email").value.trim();
+    const btn = document.getElementById("sendOtpBtn");
 
     if (!email) {
       msg.textContent = "Email is required";
       msg.style.color = "red";
       return;
     }
+
+    // Loading state
+    btn.textContent = "Sending OTP...";
+    btn.disabled = true;
+    msg.textContent = "⏳ Please wait, sending OTP...";
+    msg.style.color = "blue";
 
     try {
       const res = await fetch(`${API_BASE_URL}/api/forgot-password/send-otp`, {
@@ -92,17 +99,22 @@
       if (!res.ok) {
         msg.textContent = data.msg || "User not found";
         msg.style.color = "red";
+        btn.textContent = "Send OTP";
+        btn.disabled = false;
         return;
       }
 
       localStorage.setItem("resetEmail", email);
-      msg.textContent = "OTP sent successfully";
+      msg.textContent = "✅ OTP sent successfully! Check your email.";
       msg.style.color = "green";
+      btn.textContent = "OTP Sent ✅";
       document.getElementById("otpSection").style.display = "block";
 
     } catch {
       msg.textContent = "Server error";
       msg.style.color = "red";
+      btn.textContent = "Send OTP";
+      btn.disabled = false;
     }
   });
 

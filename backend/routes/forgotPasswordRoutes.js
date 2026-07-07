@@ -3,6 +3,8 @@ const router = express.Router();
 const forgotController = require("../controllers/forgotPasswordController");
 
 // Test route
+
+
 router.get("/test", (req, res) => {
   res.json({ 
     message: "Forgot password routes are working!",
