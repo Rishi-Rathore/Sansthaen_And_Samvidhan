@@ -12,7 +12,7 @@ const sendMail = async (to, otp) => {
   });
 
   await transporter.sendMail({
-    from: '"Sansthaen And Samvidhan" <rishirathour999@gmail.com>',
+    from: '"Sansthaen And Samvidhan" <b126f8001@smtp-brevo.com>',
     to: to,
     subject: "OTP Verification",
     html: `<h2>Your OTP is: <strong>${otp}</strong></h2><p>Valid for 5 minutes.</p>`
