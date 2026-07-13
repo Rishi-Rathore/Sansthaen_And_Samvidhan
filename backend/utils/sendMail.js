@@ -1,24 +1,32 @@
-const nodemailer = require("nodemailer");
+const axios = require("axios");
 
 const sendMail = async (to, otp) => {
-  const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: "b126f8001@smtp-brevo.com",
-      pass: process.env.BREVO_PASS,
-    },
-  });
+  try {
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "Sansthaen And Samvidhan",
+          email: "b126f8001@smtp-brevo.com",
+        },
+        to: [{ email: to }],
+        subject: "OTP Verification",
+        htmlContent: `<h2>Your OTP is: <strong>${otp}</strong></h2><p>Valid for 5 minutes.</p>`,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
 
-  await transporter.sendMail({
-    from: '"Sansthaen And Samvidhan" <b126f8001@smtp-brevo.com>',
-    to: to,
-    subject: "OTP Verification",
-    html: `<h2>Your OTP is: <strong>${otp}</strong></h2><p>Valid for 5 minutes.</p>`
-  });
-
-  console.log("✅ OTP mail sent to:", to);
+    console.log("✅ OTP mail sent to:", to, "| Message ID:", response.data.messageId);
+  } catch (error) {
+    console.log("❌ SEND OTP ERROR:", error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
 
 module.exports = sendMail;
