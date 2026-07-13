@@ -1,25 +1,32 @@
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: "b126f8001@smtp-brevo.com", // Yeh wala mail yahan aayega
-    pass: process.env.BREVO_PASS,     // Render dashboard par aapki SMTP Key
-  },
-});
+const axios = require("axios");
 
 const sendOtp = async (email, otp) => {
-  await transporter.sendMail({
-    from: "b126f8001@smtp-brevo.com", // Aur yahan bhi yahi mail aayega
-    to: email,
-    subject: "OTP Verification",
-    text: `Your OTP is ${otp}`,
-    html: `<h2>Your OTP is: <strong>${otp}</strong></h2><p>Valid for 5 minutes.</p>`
-  });
+  try {
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "Sansthaen And Samvidhan",
+          email: "b126f8001@smtp-brevo.com",
+        },
+        to: [{ email: email }],
+        subject: "OTP Verification",
+        htmlContent: `<h2>Your OTP is: <strong>${otp}</strong></h2><p>Valid for 5 minutes.</p>`,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
 
-  console.log("✅ OTP mail sent to:", email);
+    console.log("✅ OTP mail sent to:", email, "| Message ID:", response.data.messageId);
+  } catch (error) {
+    console.log("❌ SEND OTP ERROR:", error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
 
 module.exports = sendOtp;
