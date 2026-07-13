@@ -7,7 +7,7 @@ const sendMail = async (to, otp) => {
       {
         sender: {
           name: "Sansthaen And Samvidhan",
-          email: "b126f8001@smtp-brevo.com",
+          email: "rishirathour999@gmail.com",
         },
         to: [{ email: to }],
         subject: "OTP Verification",
